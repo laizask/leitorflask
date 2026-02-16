@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Leitor de PDFs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f9fbff;
+        color: #0057b8;
+        line-height: 1.6;
+        font-weight: 400;
+        font-size: 16px;
+        padding: 2rem;
+      }
+
+      h1, h2 {
+        color: #003a75;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        letter-spacing: 0.02em;
+      }
+
+      a {
+        color: #0057b8;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+
+      a:hover, a:focus {
+        color: #002a50;
+        text-decoration: underline;
+      }
+
+      button {
+        font-family: 'Poppins', sans-serif;
+        background-color: #0057b8;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,87,184,0.2);
+        margin-top: 1rem;
+      }
+
+      button:hover, button:focus {
+        background-color: #003a75;
+        box-shadow: 0 6px 12px rgba(0,58,117,0.4);
+      }
+
+      input[type="file"] {
+        font-family: 'Poppins', sans-serif;
+        border: 2px solid #cce2ff;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+        outline: none;
+        display: block;
+        margin-bottom: 1.5rem;
+        color: #0057b8;
+      }
+
+      input[type="file"]:focus {
+        border-color: #0057b8;
+        box-shadow: 0 0 8px rgba(0,87,184,0.3);
+      }
+
+      label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+        color: #003a75;
+      }
+
+      ul {
+        margin-top: 1rem;
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Responsividade simples */
+      @media (max-width: 600px) {
+        body {
+          padding: 1rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <h1>Leitor de PDFs</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="pdf1">Upload PDFs FGTS:</label>
+        <input type="file" name="pdf1" id="pdf1" multiple>
+
+        <label for="pdf2">Upload PDFs INSS:</label>
+        <input type="file" name="pdf2" id="pdf2" multiple>
+
+        <label for="pdf3">Upload PDFs Vínculo:</label>
+        <input type="file" name="pdf3" id="pdf3" multiple>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    {% if arquivos_gerados %}
+    <h2>Download das Planilhas:</h2>
+    <ul>
+        <li><a href="/download/dados_fgts.xlsx">Download FGTS</a></li>
+        <li><a href="/download/dados_inss.xlsx">Download INSS</a></li>
+        <li><a href="/download/dados_vinculo.xlsx">Download Vínculo</a></li>
+    </ul>
+    {% endif %}
+</body>
+</html>
