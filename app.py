@@ -31,12 +31,17 @@ def extrair_dados_fgts(arquivo_pdf):
             for i, linha in enumerate(linhas):
 
                 if "CPF/CNPJ DO EMPREGADOR" in linha.upper() and i + 1 < len(linhas):
-                    cnpj = linhas[i + 1].strip().replace('.', '')
+                    linha_empregador = linhas[i + 1].strip()
 
-                if "NOME/RAZÃO SOCIAL DO EMPREGADOR" in linha.upper() and i + 1 < len(linhas):
-                    nome = linhas[i + 1].strip()
-                    if i + 2 < len(linhas):
-                        nome += " " + linhas[i + 2].strip()
+   
+                    cnpj_match = re.search(r'\d{2}\.?\d{3}\.?\d{3}', linha_empregador)
+                    if cnpj_match:
+                        cnpj = cnpj_match.group()
+
+
+                    linha_limpa = re.sub(r'às\s+\d{2}:\d{2}:\d{2}.*', '', linha_empregador, flags=re.IGNORECASE)
+
+                    nome = linha_limpa.replace(cnpj, '').strip()
 
             for i, linha in enumerate(linhas):
                 if "PAGAR ESTE DOCUMENTO" in linha.upper():
